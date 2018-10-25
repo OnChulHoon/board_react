@@ -3,13 +3,22 @@ import ListItem from "./ListItem";
 
 class BoardList extends Component{
     render(){
-        const { list, onToggle, onRemove } = this.props;
+        const { lists, onToggle, onRemove } = this.props;
 
+        const boardLists = lists.map(
+            ({id, text, checked }) => (
+             <ListItem
+                id={id}
+                text={text}
+                checked={checked}
+                onToggle={onToggle}
+                onRemove={onRemove}
+                key={id}/>
+            )
+        );
         return (
             <div>
-                <ListItem text="테스트1"/>
-                <ListItem text="테스트2"/>
-                <ListItem text="테스트3"/>
+                {boardLists}
             </div>
         );
     }
