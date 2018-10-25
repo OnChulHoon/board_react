@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import BoardVer001 from './components/BoardVer001';
+import WriteForm from "./components/write/WriteForm";
+import BoardList from "./components/list/BoardList";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <BoardVer001 form={<WriteForm/>}>
+            <div align="center">
+                <h4>목록 표시 부분 - Test</h4>
+            </div>
+            <BoardList/>
+        </BoardVer001>
     );
   }
 }
