@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import './ListItem.css';
 
 class ListItem extends Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.checked !== nextProps.checked;
+    }
+
     render() {
         const { text, checked, id, onToggle, onRemove } = this.props;
 

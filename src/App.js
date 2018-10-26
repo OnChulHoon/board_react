@@ -18,14 +18,14 @@ class App extends Component {
 
     handleChange = (e) => {
         this.setState({
-            input: e.target.value // input 의 다음 바뀔 값
+            input: e.target.value // input 다음 바뀔 값
         });
     }
 
     handleCreate = () => {
         const { input, lists } = this.state;
         this.setState({
-            input: '', // 인풋 비우고
+            input: '', // input 내용을 비운다.
             // concat 을 사용하여 배열에 추가
             lists: lists.concat({
                 id: this.id++,
@@ -42,12 +42,41 @@ class App extends Component {
         }
     }
 
+    handleToggle = (id) => {
+        const { lists } = this.state;
+
+        // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.
+        const index = lists.findIndex(list => list.id === id);
+        const selected = lists[index]; // 선택한 객체
+
+        const nextLists = [...lists]; // 배열을 복사
+
+        // 기존의 값들을 복사하고, checked 값을 덮어쓰기
+        nextLists[index] = {
+            ...selected,
+            checked: !selected.checked
+        };
+
+        this.setState({
+            lists: nextLists
+        });
+    }
+
+    handleRemove = (id) => {
+        const { lists } = this.state;
+        this.setState({
+            lists: lists.filter(list => list.id != id)
+        });
+    }
+
     render() {
         const { input, lists } = this.state;
         const {
             handleChange,
             handleCreate,
-            handleKeyPress
+            handleKeyPress,
+            handleToggle,
+            handleRemove
         } = this;
 
     return (
@@ -62,7 +91,7 @@ class App extends Component {
             <div align="center">
                 <h4>목록 표시 부분</h4>
             </div>
-            <BoardList lists={lists}/>
+            <BoardList lists={lists} onToggle={handleToggle} onRemove={handleRemove}/>
         </BoardVer001>
     );
   }
