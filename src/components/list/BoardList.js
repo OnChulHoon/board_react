@@ -8,16 +8,17 @@ class BoardList extends Component{
     }
 
     render(){
-        const { lists, onToggle, onRemove } = this.props;
+        const { lists, onToggle, onRemove, onOpenModal } = this.props;
 
         const boardLists = lists.map(
-            ({id, text, checked }) => (
+            ({id, title, checked }) => (
              <ListItem
                 id={id}
-                text={text}
+                title={title}
                 checked={checked}
                 onToggle={onToggle}
                 onRemove={onRemove}
+                onClick={onOpenModal}
                 key={id}/>
             )
         );

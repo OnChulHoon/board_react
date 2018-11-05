@@ -8,16 +8,16 @@ class ListItem extends Component {
     }
 
     render() {
-        const { text, checked, id, onToggle, onRemove } = this.props;
+        const { title, checked, id, onToggle, onRemove, onOpenModal } = this.props;
 
         return (
-            <div className="list-item" onClick={() => onToggle(id)}>
+            <div className="list-item" onClick={() => onOpenModal(id)}>
                 <div className="remove" onClick={(e) => {
-                    e.stopPropagation(); // onToggle 이 실행되지 않도록 함
+                    e.stopPropagation();
                     onRemove(id)}
                 }>&times;</div>
                 <div className={`list-text ${checked && 'checked'}`}>
-                    <div>{text}</div>
+                    <div>{title}</div>
                 </div>
                 {
                     checked && (<div className="check-mark">✓</div>)
