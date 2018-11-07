@@ -5,17 +5,35 @@ import "react-table/react-table.css";
 
 class ListItem2 extends Component {
 
+    state = {
+        input: '',
+        textarea: '',
+        lists: [
+            { boardNo: 1, title: "글제목1", writer: "관리자1", content: "내용1", wrtDate: "2018-11-07" }
+        ]
+    }
 
+    shouldComponentUpdate(nextProps, nextState){
+        return this.props.lists !== nextProps.lists;
+    }
+/*
+    static getDerivedStateFromProps(nextProps, prevState){
+
+        if (nextProps.value !== prevState.value){
+            return { value : nextProps.value };
+        }
+        return null;
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.value !== prevProps.value){
+            console.log("value 값이 변경되었습니다!" , this.props.value);
+        }
+    }
+*/
 
     render() {
-
-        const lists = [{
-            boardNo: 1,
-            title: "글제목",
-            writer: "관리자",
-            wrtDate: "2018-11-05"
-        }]
-
 
         const columns = [{
             Header: '글번호',
@@ -35,7 +53,7 @@ class ListItem2 extends Component {
             <div>
                 <ReactTable
                     columns={columns}
-                    data={lists}
+                    data={this.state.lists}
                     defaultPageSize={3}
                     pageSizeOptions={[3, 6]}/>
             </div>
