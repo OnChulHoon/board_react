@@ -1,29 +1,37 @@
-import React, { Component } from 'react';
-import ListItem2 from "./ListItem2";
+import React, {Component} from 'react';
+import ReactTable from "react-table";
+import "react-table/react-table.css";
+
 
 class BoardList2 extends Component{
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.props.lists !== nextProps.lists;
-    }
-
     render(){
+
+        const columns = [{
+            Header: '글번호',
+            accessor: 'boardNo'
+        },{
+            Header: '제목',
+            accessor: 'title'
+        },{
+            Header: '작성자',
+            accessor: 'writer'
+        },{
+            Header: '작성일',
+            accessor: 'wrtDate'
+        }]
+
         const { lists } = this.props;
 
-        const boardLists = lists.map(
-            ({ boardNo, title, writer, content, wrtDate }) => (
-                <ListItem2
-                    boardNo={boardNo}
-                    title={title}
-                    writer={writer}
-                    content={content}
-                    wrtDate={wrtDate}/>
-            )
-        );
+        console.log(lists);
 
         return (
             <div>
-                <ListItem2 data={boardLists}/>
+                <ReactTable
+                    columns={columns}
+                    data={this.props.lists}
+                    defaultPageSize={3}
+                    pageSizeOptions={[3, 6]}/>
             </div>
         );
     }
