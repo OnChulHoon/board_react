@@ -16,18 +16,20 @@ class App extends Component {
         super();
 
         this.state = {
-
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
             ]
         }
     }
 
-    // componentDidMount(){
-    //     console.log('componentDidMount');
-    // }
+    componentDidMount(){
+        this.setState({
+            wrtDate : document.getElementById("wrtDate").value
+        });
+    }
 
     handleChange = (e) => {
+
         this.setState({
             [e.target.name] : e.target.value
         });
@@ -60,20 +62,40 @@ class App extends Component {
         } );
     }
 
+    handleClick = () =>{
+
+        console.log(this.props.content);
+    }
+
+    showModalComponent = () => {
+
+        console.log('Modal Call!!');
+    }
+
 
     render() {
         const { board_lists } = this.state;
         const {
             handleCreate,
-            handleChange
+            handleChange,
+            handleClick,
+            showModalComponent
         } = this;
+
+        const currDate = new Date();
+        currDate.setDate(currDate.getDate());
+        const defDate = currDate.toISOString().substr(0,10);
+
+
 
     return (
         <Fragment>
             <BoardVer001 form={(
                     <WriteForm
+                        wrtDate={defDate}
                         onChange={handleChange}
                         onCreate={handleCreate}
+                        onClick={handleClick}
                     />
             )}>
 
@@ -81,7 +103,7 @@ class App extends Component {
                     <h4>목록 표시 부분</h4>
                 </div>
 
-                <BoardList2 lists={board_lists} />
+                <BoardList2 lists={board_lists} onClick={showModalComponent}/>
             </BoardVer001>
 
             <div align="center">
@@ -90,7 +112,7 @@ class App extends Component {
                 <br/>
                 <h4>상세보기 모달</h4>
             </div>
-            <DetailModal/>
+            <DetailModal contentLists={board_lists[0].content}/>
         </Fragment>
 
     );

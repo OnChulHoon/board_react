@@ -21,6 +21,11 @@ class DetailModal extends Component {
 
     render() {
         const { open } = this.state;
+
+        const { contentLists } = this.props;
+
+        console.log(contentLists);
+
         return (
             <div style={styles}>
                 <h4>테스트 버전</h4>
@@ -28,9 +33,7 @@ class DetailModal extends Component {
                 <Modal open={open} onClose={this.onCloseModal} center>
                     <h2>Simple centered modal</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                        pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-                        hendrerit risus, sed porttitor quam.
+                        {this.props.contentLists}
                     </p>
                 </Modal>
             </div>

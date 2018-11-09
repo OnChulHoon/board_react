@@ -2,7 +2,7 @@ import React from "react";
 import './WriteForm.css';
 
 
-const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate}) => {
+const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate, onClick }) => {
 
     return (
         <div className="form">
@@ -10,7 +10,7 @@ const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate}) => {
                 <div>
                     <label>
                         제목 :
-                        <input type="text" name="title" value={title} onChange={onChange} />
+                        <input type="text" name="title" value={title} onChange={onChange} onClick={onClick} />
                     </label>
                 </div>
                 <div>
@@ -22,7 +22,7 @@ const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate}) => {
                 <div>
                     <label>
                         작성일 :
-                        <input type="date" name="wrtDate" value={wrtDate} onChange={onChange} />
+                        <input id="wrtDate" type="date" name="wrtDate" onChange={onChange} defaultValue={wrtDate} />
                     </label>
                 </div>
                 <div>
@@ -31,7 +31,6 @@ const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate}) => {
                         <textarea name="content" value={content} onChange={onChange} />
                     </label>
                 </div>
-
 
                 <div className="write-button" onClick={onCreate}>
                     작성
