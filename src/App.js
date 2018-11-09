@@ -8,7 +8,9 @@ import DetailModal from "./components/modal/DetailModal";
 class App extends Component {
 
 
-    id = 1
+    idx = 1
+
+    boardNo = 2
 
     constructor(){
         super();
@@ -16,11 +18,10 @@ class App extends Component {
         this.state = {
 
             board_lists: [
-                { id: 0, boardNo: 1, title: "글제목1", writer: "관리자1", content: "내용1", wrtDate: "2018-11-07" }
+                { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
             ]
         }
     }
-
 
     // componentDidMount(){
     //     console.log('componentDidMount');
@@ -33,7 +34,7 @@ class App extends Component {
         console.log("New State: ", this.state);
     }
 
-    handleCreate = (e) => {
+    handleCreate = () => {
 
         const { board_lists, ...restState } = this.state;
 
@@ -42,30 +43,21 @@ class App extends Component {
         // 복사 한 이유는 call by reference 때문에
         const newBoardLists = _.cloneDeep(board_lists);
         // const newBoardLists = this.state.board_lists;
-        newBoardLists.push( formData );
-        //newBoardLists.push({boardNo : this.state.boardNo + 1});
+
+        //newBoardLists.push(formData);
+        newBoardLists.push( {idx: this.idx++, boardNo: this.boardNo++,
+            title: formData.title,
+            writer: formData.writer,
+            wrtDate: formData.wrtDate,
+            content: formData.content
+        } );
 
         console.log( 'this.state.board_lists', this.state.board_lists );
         console.log( 'newBoardLists', newBoardLists );
 
         this.setState( {
-            board_lists: newBoardLists,
+            board_lists: newBoardLists
         } );
-
-
-        // console.log(e.target.title.value);
-        // const { board_lists } = this.state;
-        //
-        // this.setState({
-        //
-        //     board_lists: board_lists.concat({
-        //         //boardNo: this.state.lists.boardNo + 1,
-        //         id: this.id++,
-        //         //title: e.target.title.value
-        //         [e.target.name] : e.target.value
-        //     })
-        // });
-        // console.log(board_lists);
     }
 
 

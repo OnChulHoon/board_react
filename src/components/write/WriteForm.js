@@ -2,8 +2,8 @@ import React from "react";
 import './WriteForm.css';
 
 
-
 const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate}) => {
+
     return (
         <div className="form">
             <form>

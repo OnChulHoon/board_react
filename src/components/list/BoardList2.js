@@ -30,6 +30,12 @@ class BoardList2 extends Component{
                 <ReactTable
                     columns={columns}
                     data={this.props.lists}
+                    sorted={[
+                        {
+                            idx: 'lastName',
+                            desc: true
+                        }
+                    ]}
                     defaultPageSize={3}
                     pageSizeOptions={[3, 6]}/>
             </div>
