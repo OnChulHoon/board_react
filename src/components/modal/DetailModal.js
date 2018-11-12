@@ -24,16 +24,17 @@ class DetailModal extends Component {
 
         const { contentLists } = this.props;
 
-        console.log(contentLists);
+        console.log("contentLists : ", contentLists);
+        console.log("contentLists.row : ", contentLists.row);
 
         return (
             <div style={styles}>
                 <h4>테스트 버전</h4>
                 <button onClick={this.onOpenModal}>Open modal</button>
                 <Modal open={open} onClose={this.onCloseModal} center>
-                    <h2>Simple centered modal</h2>
+                    <h2>{this.props.contentLists.title}</h2>
                     <p>
-                        {this.props.contentLists}
+                        {this.props.contentLists.content}
                     </p>
                 </Modal>
             </div>

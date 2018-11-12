@@ -4,6 +4,7 @@ import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList2 from "./components/list/BoardList2";
 import DetailModal from "./components/modal/DetailModal";
+//import BoardDetail from "../detail/BoardDetail";
 
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
         super();
 
         this.state = {
+
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
             ]
@@ -67,11 +69,25 @@ class App extends Component {
         console.log(this.props.content);
     }
 
-    showModalComponent = () => {
+    HandleShowModal = () => {
 
         console.log('Modal Call!!');
     }
 
+    myCallback = (dataFromChild) => {
+
+    }
+
+    getIndexNum = (indexNum) => {
+
+        this.setState({
+
+            index : indexNum
+
+        });
+
+        console.log("indexNum :", this.state.index);
+    }
 
     render() {
         const { board_lists } = this.state;
@@ -79,7 +95,8 @@ class App extends Component {
             handleCreate,
             handleChange,
             handleClick,
-            showModalComponent
+            HandleShowModal,
+            //getIndexNum
         } = this;
 
         const currDate = new Date();
@@ -90,6 +107,7 @@ class App extends Component {
 
     return (
         <Fragment>
+
             <BoardVer001 form={(
                     <WriteForm
                         wrtDate={defDate}
@@ -103,7 +121,8 @@ class App extends Component {
                     <h4>목록 표시 부분</h4>
                 </div>
 
-                <BoardList2 lists={board_lists} onClick={showModalComponent}/>
+                <BoardList2 lists={board_lists} onClick={HandleShowModal} />
+
             </BoardVer001>
 
             <div align="center">
@@ -112,7 +131,7 @@ class App extends Component {
                 <br/>
                 <h4>상세보기 모달</h4>
             </div>
-            <DetailModal contentLists={board_lists[0].content}/>
+            <DetailModal contentLists={board_lists[0]}/>
         </Fragment>
 
     );
