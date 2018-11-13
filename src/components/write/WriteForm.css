@@ -8,6 +8,7 @@
     outline: none;
     border: none;
     border-bottom: 1px solid #c5f6fa;
+    padding-left: 10px;
 }
 
 .write-button {
@@ -15,14 +16,56 @@
     padding-bottom: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    margin-left: 1rem;
+    margin-top: 10px;
+    margin-left: 330px;
     background: #22b8cf;
     border-radius: 3px;
     color: white;
     font-weight: 600;
     cursor: pointer;
+    text-align: center;
+}
+
+.modify-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    margin-left: 10px;
+    margin-right: 0px;
+    background: #22b8cf;
+    border-radius: 3px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cancel-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    margin-left: 10px;
+    margin-right: 0px;
+    background: #22b8cf;
+    border-radius: 3px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
 }
 
 .write-button:hover {
+    background: #3bc9db;
+}
+
+.modify-button:hover {
+    background: #3bc9db;
+}
+
+.cancel-button:hover {
     background: #3bc9db;
 }

@@ -4,16 +4,20 @@ import "react-table/react-table.css";
 //import DetailModal from "../modal/DetailModal";
 import BoardDetail from "../detail/BoardDetail";
 
+const styles = {
+    textAlign: "center",
+
+};
 
 class BoardList2 extends Component{
 
-
     // 필요한 기본 state 값을 설정한다.
-    constructor(props){
-        super(props)
+    constructor(props2){
+        super(props2)
         this.state = {
             pageSize: 5,
-            filter: false
+            filter: false,
+            rows: this.props.lists
         }
     }
 
@@ -24,8 +28,27 @@ class BoardList2 extends Component{
         })
     }
 
+    handleRemoveRow = (i) => {
+        let rows = [...this.state.rows]
+        rows.splice(i, 1)
+        this.setState({
+            rows: rows
+        })
+        console.log( "[BoardList2] state.rows.i: ", this.state.rows);
+        alert("[BoardList2] 삭제 이벤트 발생!!");
+    }
 
     render(){
+
+        const onRemove = (row) => {
+            return(
+                <div>
+                    <input id="rowIdx" type="hidden" value={row}></input>
+                </div>
+            );
+
+
+        }
 
         // 목록에 표시할 다른 컴퍼넌트를 선택한 행의 값을 보내고 호출한다.
         const subComponentMapper = row => {
@@ -37,31 +60,46 @@ class BoardList2 extends Component{
         };
 
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log( "[BoardList2]props.content: ", this.props.lists);
+        console.log( "[BoardList2] props.lists: ", this.props.lists);
 
         // 열 데이터의 라벨을 지정한다.
         const columns = [{
             Header: '글번호',
             accessor: 'boardNo',
             // 행에 표시할 사용자 정의 태그와 표시할 데이터 값을 설정한다.
-            Cell: props => <span className = 'number'> {
-                props.value
-            } </span>
+            Cell: props =>
+                <div style={styles}>
+                    <span className = 'number'> {
+                        props.value
+                    } </span>
+                </div>
         },{
             Header: '제목',
             accessor: 'title',
         },{
             Header: '작성자',
-            accessor: 'writer'
+            accessor: 'writer',
+            Cell: props =>
+                <div style={styles}>
+                    <span className = 'text'> {
+                        props.value
+                    } </span>
+                </div>
         },{
             Header: '작성일',
-            accessor: 'wrtDate'
+            accessor: 'wrtDate',
+            Cell: props =>
+                <div style={styles}>
+                    <span className = 'text'> {
+                        props.value
+                    } </span>
+                </div>
         },{
             Header: '삭제',
             accessor: 'delete',
             Cell: row => (
-                <div>
-                    <button row={row}>삭제하기</button>
+                <div style={styles}>
+                    <button onClick={(i) => onRemove(i)} row={row}>삭제하기</button>
                 </div>
             )
 
@@ -74,7 +112,7 @@ class BoardList2 extends Component{
                     columns={columns}
                     // 행에 표시할 데이터값을 성정한다.
                     data={this.props.lists}
-                    // 내림차수 또는 오름차순으로 목록을 정렬한다.
+                    // 내림차순 또는 오름차순으로 목록을 정렬한다.
                     sorted={[
                         {
                             idx: 'lastName',
@@ -92,7 +130,7 @@ class BoardList2 extends Component{
                     SubComponent = {subComponentMapper}
 
 
-                    // React-Table 라이브러리에서 td 테그의 행 데이터를 조회하는 기능을 한다.
+                    // React-Table 라이브러리에서 td 태그의 행 데이터를 조회하는 기능을 한다.
                     // getTdProps={(state, rowInfo, column, instance, idxNum) => {
                     //     return {
                     //

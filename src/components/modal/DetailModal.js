@@ -25,9 +25,9 @@ class DetailModal extends Component {
 
         const { contentLists } = this.props;
 
-        console.log("[DetailModal]contentLists : ", contentLists);
-        console.log("[DetailModal]contentLists.row.index : ", contentLists.index);
-        console.log("[DetailModal]contentLists.original : ", contentLists.title);
+        console.log("[DetailModal] contentLists : ", contentLists);
+        console.log("[DetailModal] contentLists.row.index : ", contentLists.index);
+        console.log("[DetailModal] contentLists.original.title : ", contentLists.title);
 
 
         return (

@@ -36,7 +36,7 @@ class App extends Component {
             [e.target.name] : e.target.value
         });
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log("[App]New State: ", this.state);
+        console.log("[App] New State: ", this.state);
     }
 
     // 작성 버튼을 누르면 입력란에 입력된 데이터 값을 state에 지정한 맵 형식으로 업데이트한다.
@@ -50,7 +50,9 @@ class App extends Component {
         // const newBoardLists = this.state.board_lists;
 
         //newBoardLists.push(formData);
-        newBoardLists.push( {idx: this.idx++, boardNo: this.boardNo++,
+        newBoardLists.push( {
+            idx: this.idx++,
+            boardNo: this.boardNo++,
             title: formData.title,
             writer: formData.writer,
             wrtDate: formData.wrtDate,
@@ -58,20 +60,44 @@ class App extends Component {
         } );
 
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log( '[App]this.state.board_lists: ', this.state.board_lists );
-        console.log( '[App]newBoardLists: ', newBoardLists );
+        console.log( '[App] this.state.board_lists: ', this.state.board_lists );
+        console.log( '[App] newBoardLists: ', newBoardLists );
 
         this.setState( {
-            board_lists: newBoardLists
+            board_lists: newBoardLists,
         } );
+        // 입력폼의 입력란 값을 초기화한다.
+        document.getElementById("boardWriteForm").reset();
+        // 등록 성공 메시지를 표시한다.
+        alert("게시글 등록이 완료되었습니다.");
     }
+    // 수정한 데이터 값을 제어한다.
+    handleModify = () => {
 
+    }
+    // 선택된 데이터를 삭제한다.
+    handleRemove = (row) => {
+        let idx = row
+        //idx = document.getElementById("rowIdx").value;
+        alert("[App] 삭제 이벤트 발생!!");
+        console.log("[App] row: ", idx );
+    }
+    // 취소 버튼 이벤트를 제어한다.
+    handleCancel= () => {
+        // 입력폼의 입력란 값을 초기화한다.
+        document.getElementById("boardWriteForm").reset();
+        // 취소 완료 메시지를 표시한다.
+        alert("입력이 취소되었습니다.");
+    }
 
     render() {
         const { board_lists } = this.state;
         const {
             handleCreate,
-            handleChange
+            handleChange,
+            handleModify,
+            handleRemove,
+            handleCancel
         } = this;
 
         // 현재 시간으로 날짜를 설정하여 저장한다.
@@ -83,11 +109,13 @@ class App extends Component {
         <Fragment>
 
             <BoardVer001 form={(
-                //게시글 작성폼을 표시한다.
+                // 게시글 작성폼을 표시한다.
                     <WriteForm
                         wrtDate={defDate}
                         onChange={handleChange}
                         onCreate={handleCreate}
+                        onModify={handleModify}
+                        onCancel={handleCancel}
                     />
             )}>
                {/* 게시글 목록을 표시한다.*/}
@@ -95,9 +123,10 @@ class App extends Component {
                     <h2>게시글 목록</h2>
                 </div>
 
-                <BoardList2 lists={board_lists} />
+                <BoardList2 lists={board_lists} onRemove={handleRemove} />
 
             </BoardVer001>
+
             {/* 입력값 확인 및 테스트용 태그
             <div align="center">
                 <br/>
