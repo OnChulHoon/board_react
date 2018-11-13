@@ -3,7 +3,8 @@ import Modal from "react-responsive-modal";
 
 const styles = {
     fontFamily: "sans-serif",
-    textAlign: "center"
+    textAlign: "left",
+    paddingLeft: "100px",
 };
 
 class DetailModal extends Component {
@@ -24,12 +25,14 @@ class DetailModal extends Component {
 
         const { contentLists } = this.props;
 
-        console.log("contentLists : ", contentLists);
-        console.log("contentLists.row : ", contentLists.row);
+        console.log("[DetailModal]contentLists : ", contentLists);
+        console.log("[DetailModal]contentLists.row.index : ", contentLists.index);
+        console.log("[DetailModal]contentLists.original : ", contentLists.title);
+
 
         return (
             <div style={styles}>
-                <h4>테스트 버전</h4>
+                <h3>Modal 호출</h3>
                 <button onClick={this.onOpenModal}>Open modal</button>
                 <Modal open={open} onClose={this.onCloseModal} center>
                     <h2>{this.props.contentLists.title}</h2>
