@@ -12,11 +12,11 @@ class BoardDetail extends Component {
 
         const { selectedRow } = this.props;
 
-        console.log("[BoardDetail] selectedContent : ", selectedRow);
-        console.log("[BoardDetail] row.original.idx : ", selectedRow.idx);
-        console.log("[BoardDetail] row.original.boardNo : ", selectedRow.boardNo);
-        console.log("[BoardDetail] row.original.title : ", selectedRow.title);
-        console.log("[BoardDetail] row.original.content : ", selectedRow.content);
+        // console.log("[BoardDetail] selectedContent : ", selectedRow);
+        // console.log("[BoardDetail] row.original.idx : ", selectedRow.idx);
+        // console.log("[BoardDetail] row.original.boardNo : ", selectedRow.boardNo);
+        // console.log("[BoardDetail] row.original.title : ", selectedRow.title);
+        // console.log("[BoardDetail] row.original.content : ", selectedRow.content);
 
         return (
             <div style={styles}>

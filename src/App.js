@@ -16,11 +16,12 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
-            listDataFromChild: null,
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
             ],
-            rows: null
+            rows: null,
+            editing: false,
+            selectedRowIdx: -1
         }
     }
 
@@ -32,13 +33,27 @@ class App extends Component {
         });
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        //const {selectedRowData, onUpdate} = this.props;
+        const idx = prevState.selectedRowIdx;
+        console.log("idx: ", idx);
+        const prevStateData = prevState.board_lists;
+        if(!prevState.editing && this.state.editing) {
+
+            this.setState({
+                selectedRow : prevStateData[idx]
+            })
+        }
+        console.log("DidUpdate -> state.selectedRow: ", this.state.selectedRow);
+    }
+
     // 입력란이 변경될 때마다 조회하여 state 값을 업데이트한다.
     handleChange = (e) => {
         this.setState({
             [e.target.name] : e.target.value
         });
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log("[App] New State: ", this.state);
+        //console.log("[App] New State: ", this.state);
     }
 
     // 작성 버튼을 누르면 입력란에 입력된 데이터 값을 state에 지정한 맵 형식으로 업데이트한다.
@@ -62,8 +77,8 @@ class App extends Component {
         } );
 
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log( '[App] this.state.board_lists: ', this.state.board_lists );
-        console.log( '[App] newBoardLists: ', newBoardLists );
+        //console.log( '[App] this.state.board_lists: ', this.state.board_lists );
+        //console.log( '[App] newBoardLists: ', newBoardLists );
 
         this.setState( {
             board_lists: newBoardLists,
@@ -73,6 +88,17 @@ class App extends Component {
         // 등록 성공 메시지를 표시한다.
         alert("게시글 등록이 완료되었습니다.");
     }
+    // 수정할 행 데이터를 폼에 보여준다.
+    handleShowRowData = (selectedRowIndex) => {
+        console.log("[App] selectedRowIndex:", selectedRowIndex);
+        const {editing} = this.state;
+        //let selectedRow = _.cloneDeep(selectedRowData);
+        console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
+        this.setState({
+            editing: !editing,
+            selectedRowIdx: selectedRowIndex,
+        });
+    }
     // 수정한 데이터 값을 제어한다.
     handleModify = () => {
 
@@ -80,8 +106,8 @@ class App extends Component {
     // 선택된 데이터를 삭제한다.
     handleRemove = (i) => {
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log("[App] i(row.index): ", i );
-        console.log('[App] this.state.board_lists: ', this.state.board_lists);
+        //console.log("[App] i(row.index): ", i );
+        //console.log("[App] this.state.board_lists: ", this.state.board_lists);
         // 현재 state에 담아있는 board_lists 값들을 참조하는 변수를 만든다.
         let board_lists_refresh = [...this.state.board_lists];
         // 선택한 행의 인덱스 값의 데이터를 제거한다.
@@ -90,7 +116,7 @@ class App extends Component {
             board_lists: board_lists_refresh
         });
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log('[App] let board_lists_refresh after splice: ', board_lists_refresh);
+        //console.log('[App] let board_lists_refresh after splice: ', board_lists_refresh);
         alert("게시글이 삭제되었습니다.");
 
     }
@@ -102,22 +128,6 @@ class App extends Component {
         alert("입력이 취소되었습니다.");
     }
 
-    // myCallback = (dataFromChild, row) => {
-    //     console.log( "[App] dataFromChild_first: ", dataFromChild);
-    //     let board_lists = [...this.state.board_lists]
-    //     board_lists.splice(0, dataFromChild)
-    //     board_lists.splice(dataFromChild +1, dataFromChild.length)
-    //     this.setState({
-    //         board_lists: board_lists
-    //     })
-    //     console.log( "[App] row: ", row);
-    //     //console.log( "[App] state.rows.i: ", this.state.rows);
-    //     console.log( "[App] dataFromChild_second: ", dataFromChild.index);
-    //     alert("[App] 삭제 이벤트 발생!!");
-    //
-    //     //this.setState({ listDataFromChild: dataFromChild });
-    // }
-
     render() {
         const { board_lists } = this.state;
         const {
@@ -125,7 +135,8 @@ class App extends Component {
             handleChange,
             handleModify,
             handleRemove,
-            handleCancel
+            handleCancel,
+            handleShowRowData
         } = this;
 
         // 현재 시간으로 날짜를 설정하여 저장한다.
@@ -144,6 +155,7 @@ class App extends Component {
                         onCreate={handleCreate}
                         onModify={handleModify}
                         onCancel={handleCancel}
+                        editing={this.state.editing}
                     />
             )}>
                {/* 게시글 목록을 표시한다.*/}
@@ -151,7 +163,7 @@ class App extends Component {
                     <h2>게시글 목록</h2>
                 </div>
 
-                <BoardList2 lists={board_lists} onRemove={handleRemove} >
+                <BoardList2 lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData} >
 
                 </BoardList2>
 

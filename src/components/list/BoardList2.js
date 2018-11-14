@@ -57,7 +57,7 @@ class BoardList2 extends Component{
         };
 
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log( "[BoardList2] props.lists: ", this.props.lists);
+        //console.log( "[BoardList2] props.lists: ", this.props.lists);
 
         // 열 데이터의 라벨을 지정한다.
         const columns = [{
@@ -92,12 +92,14 @@ class BoardList2 extends Component{
                     } </span>
                 </div>
         },{
-            Header: '삭제',
-            accessor: 'delete',
+            Header: '수정/삭제',
+            accessor: 'modifyAndDelete',
             Cell: row => (
                 <div style={styles}>
                     {/*// 콘솔에서 데이터 확인용 로그 출력*/}
                     {console.log("[BoardList2] selected.row: ", row)}
+                    {console.log("[BoardList2] selected.row.original: ", row.original)}
+                    <button onClick={() => this.props.showRowData(row.index)}>수정</button>
                     <button onClick={() => {if(window.confirm("[ "+ row.original.boardNo + " ] 번 글을 삭제하시겠습니까?")){this.props.onRemove(row.index)};}}>삭제</button>
                 </div>
             )
