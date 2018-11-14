@@ -10,19 +10,17 @@ class BoardDetail extends Component {
 
     render() {
 
-        const { contentLists } = this.props;
+        const { selectedRow } = this.props;
 
-        // 콘솔에서 데이터 확인용 로그 출력
-        console.log("[BoardDetail] contentLists : ", contentLists);
-        console.log("[BoardDetail] row.original.idx : ", contentLists.idx);
-        console.log("[BoardDetail] row.original.boardNo : ", contentLists.boardNo);
-        console.log("[BoardDetail] row.original.title : ", contentLists.title);
-        console.log("[BoardDetail] row.original.content : ", contentLists.content);
+        console.log("[BoardDetail] selectedContent : ", selectedRow);
+        console.log("[BoardDetail] row.original.idx : ", selectedRow.idx);
+        console.log("[BoardDetail] row.original.boardNo : ", selectedRow.boardNo);
+        console.log("[BoardDetail] row.original.title : ", selectedRow.title);
+        console.log("[BoardDetail] row.original.content : ", selectedRow.content);
 
         return (
             <div style={styles}>
-                {/*<h3>{this.props.contentLists.title}</h3>*/}
-                <h4>{this.props.contentLists.content}</h4>
+                <h4>{this.props.selectedRow.content}</h4>
             </div>
         );
     }

@@ -16,9 +16,11 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
+            listDataFromChild: null,
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
-            ]
+            ],
+            rows: null
         }
     }
 
@@ -76,11 +78,21 @@ class App extends Component {
 
     }
     // 선택된 데이터를 삭제한다.
-    handleRemove = (row) => {
-        let idx = row
-        //idx = document.getElementById("rowIdx").value;
-        alert("[App] 삭제 이벤트 발생!!");
-        console.log("[App] row: ", idx );
+    handleRemove = (i) => {
+        // 콘솔에서 데이터 확인용 로그 출력
+        console.log("[App] i(row.index): ", i );
+        console.log('[App] this.state.board_lists: ', this.state.board_lists);
+        // 현재 state에 담아있는 board_lists 값들을 참조하는 변수를 만든다.
+        let board_lists_refresh = [...this.state.board_lists];
+        // 선택한 행의 인덱스 값의 데이터를 제거한다.
+        this.setState({
+            ...board_lists_refresh.splice(i, 1),
+            board_lists: board_lists_refresh
+        });
+        // 콘솔에서 데이터 확인용 로그 출력
+        console.log('[App] let board_lists_refresh after splice: ', board_lists_refresh);
+        alert("게시글이 삭제되었습니다.");
+
     }
     // 취소 버튼 이벤트를 제어한다.
     handleCancel= () => {
@@ -89,6 +101,22 @@ class App extends Component {
         // 취소 완료 메시지를 표시한다.
         alert("입력이 취소되었습니다.");
     }
+
+    // myCallback = (dataFromChild, row) => {
+    //     console.log( "[App] dataFromChild_first: ", dataFromChild);
+    //     let board_lists = [...this.state.board_lists]
+    //     board_lists.splice(0, dataFromChild)
+    //     board_lists.splice(dataFromChild +1, dataFromChild.length)
+    //     this.setState({
+    //         board_lists: board_lists
+    //     })
+    //     console.log( "[App] row: ", row);
+    //     //console.log( "[App] state.rows.i: ", this.state.rows);
+    //     console.log( "[App] dataFromChild_second: ", dataFromChild.index);
+    //     alert("[App] 삭제 이벤트 발생!!");
+    //
+    //     //this.setState({ listDataFromChild: dataFromChild });
+    // }
 
     render() {
         const { board_lists } = this.state;
@@ -123,7 +151,9 @@ class App extends Component {
                     <h2>게시글 목록</h2>
                 </div>
 
-                <BoardList2 lists={board_lists} onRemove={handleRemove} />
+                <BoardList2 lists={board_lists} onRemove={handleRemove} >
+
+                </BoardList2>
 
             </BoardVer001>
 

@@ -28,33 +28,30 @@ class BoardList2 extends Component{
         })
     }
 
-    handleRemoveRow = (i) => {
-        let rows = [...this.state.rows]
-        rows.splice(i, 1)
-        this.setState({
-            rows: rows
-        })
-        console.log( "[BoardList2] state.rows.i: ", this.state.rows);
-        alert("[BoardList2] 삭제 이벤트 발생!!");
+    // handleRemoveRow = (i) => {
+    //     let rows = [...this.state.rows]
+    //     rows.splice(i, 1)
+    //     this.setState({
+    //         rows: rows
+    //     })
+    //     let boardNo = rows.original;
+    //     console.log( "[BoardList2] state.rows.i: ", this.state.rows);
+    //     console.log( "[BoardList2] i: ", i);
+    //     console.log( "[BoardList2] boardNo: ", boardNo);
+    //     alert("[BoardList2] 삭제 이벤트 발생!!" + boardNo);
+    // }
+
+    DoingSomethingFn = () => {
+        //this.props.callbackFromParent(this.props.lists);
     }
 
     render(){
-
-        const onRemove = (row) => {
-            return(
-                <div>
-                    <input id="rowIdx" type="hidden" value={row}></input>
-                </div>
-            );
-
-
-        }
 
         // 목록에 표시할 다른 컴퍼넌트를 선택한 행의 값을 보내고 호출한다.
         const subComponentMapper = row => {
             return (
                 <div>
-                    <BoardDetail contentLists={row.original}/>
+                    <BoardDetail selectedRow={row.original} onRemove={this.props.onRemove}/>
                 </div>
             );
         };
@@ -99,7 +96,9 @@ class BoardList2 extends Component{
             accessor: 'delete',
             Cell: row => (
                 <div style={styles}>
-                    <button onClick={(i) => onRemove(i)} row={row}>삭제하기</button>
+                    {/*// 콘솔에서 데이터 확인용 로그 출력*/}
+                    {console.log("[BoardList2] selected.row: ", row)}
+                    <button onClick={() => {if(window.confirm("[ "+ row.original.boardNo + " ] 번 글을 삭제하시겠습니까?")){this.props.onRemove(row.index)};}}>삭제</button>
                 </div>
             )
 
