@@ -3,6 +3,7 @@ import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList2 from "./components/list/BoardList2";
+//import UpdateForm from "./components/modify/UpdateForm";
 //import DetailModal from "./components/modal/DetailModal";
 //import BoardDetail from "../detail/BoardDetail";
 
@@ -21,30 +22,21 @@ class App extends Component {
             ],
             rows: null,
             editing: false,
-            selectedRowIdx: -1
+            selectedRowIdx: -1,
+            selectedRowData: [
+                { idx: null, boardNo: null, title: null, writer: null, content: null, wrtDate: null }
+            ],
+            newRowData: null,
+
         }
     }
 
-    // 페이지 렌더 후에 state 값을 업데이트한다.
+    // 컴포넌트 렌더 후에 state 값을 업데이트한다.
     componentDidMount(){
         this.setState({
             // 현재 시간의 날짜로 지정된 값을 불러와 지정한다.
             wrtDate : document.getElementById("wrtDate").value
         });
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        //const {selectedRowData, onUpdate} = this.props;
-        const idx = prevState.selectedRowIdx;
-        console.log("idx: ", idx);
-        const prevStateData = prevState.board_lists;
-        if(!prevState.editing && this.state.editing) {
-
-            this.setState({
-                selectedRow : prevStateData[idx]
-            })
-        }
-        console.log("DidUpdate -> state.selectedRow: ", this.state.selectedRow);
     }
 
     // 입력란이 변경될 때마다 조회하여 state 값을 업데이트한다.
@@ -53,7 +45,7 @@ class App extends Component {
             [e.target.name] : e.target.value
         });
         // 콘솔에서 데이터 확인용 로그 출력
-        //console.log("[App] New State: ", this.state);
+        console.log("[App] New State: ", this.state);
     }
 
     // 작성 버튼을 누르면 입력란에 입력된 데이터 값을 state에 지정한 맵 형식으로 업데이트한다.
@@ -84,24 +76,58 @@ class App extends Component {
             board_lists: newBoardLists,
         } );
         // 입력폼의 입력란 값을 초기화한다.
-        document.getElementById("boardWriteForm").reset();
+        document.getElementById("insertForm").reset();
         // 등록 성공 메시지를 표시한다.
         alert("게시글 등록이 완료되었습니다.");
     }
-    // 수정할 행 데이터를 폼에 보여준다.
-    handleShowRowData = (selectedRowIndex) => {
-        console.log("[App] selectedRowIndex:", selectedRowIndex);
+
+    // 선택열 데이터 값으로 제어
+    handleShowRowData = (selectedRowValue, rowIndex) => {
+        //console.log("[App] selectedRowValue:", selectedRowValue);
+        //console.log("[App] rowIndex:", rowIndex);
         const {editing} = this.state;
-        //let selectedRow = _.cloneDeep(selectedRowData);
-        console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
+        //console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
+
+        const selectedRowDataDef = selectedRowValue;
         this.setState({
+            selectedRowData: selectedRowDataDef,
             editing: !editing,
-            selectedRowIdx: selectedRowIndex,
+            selectedRowIdx: rowIndex,
         });
+        //console.log("[App] this.state.selectedRowData:", selectedRowData);
+        //console.log("[App] this.props.selectedRowDataDef:", selectedRowDataDef);
     }
     // 수정한 데이터 값을 제어한다.
     handleModify = () => {
 
+        const { selectedRowData, ...restState } = this.state;
+        const {board_lists, selectedRowIdx} = this.state
+        const newFormData = restState;
+
+        this.state = {newRowData:
+                [{idx: selectedRowData.idx,
+                boardNo: selectedRowData.boardNo,
+                title: newFormData.title,
+                writer: selectedRowData.writer,
+                wrtDate: selectedRowData.wrtDate,
+                content: newFormData.content}]}
+
+
+        console.log( '[App] newFormData: ', newFormData );
+        console.log( '[App] this.state.newRowData: ', this.state.newRowData );
+
+
+        //board_lists.splice(selectedRowIdx,1,this.state.newRowData);
+
+        this.setState( {
+            ...board_lists.splice(selectedRowIdx,1,this.state.newRowData)
+        } );
+        //console.log( '[App] info.idx: ', info.idx );
+        console.log( '[App] this.state.board_lists: ', this.state.board_lists );
+        // 입력폼의 입력란 값을 초기화한다.
+        document.getElementById("insertForm").reset();
+        // 등록 성공 메시지를 표시한다.
+        alert("게시글 수정이 완료되었습니다.");
     }
     // 선택된 데이터를 삭제한다.
     handleRemove = (i) => {
@@ -123,20 +149,36 @@ class App extends Component {
     // 취소 버튼 이벤트를 제어한다.
     handleCancel= () => {
         // 입력폼의 입력란 값을 초기화한다.
-        document.getElementById("boardWriteForm").reset();
+        document.getElementById("insertForm").reset();
         // 취소 완료 메시지를 표시한다.
         alert("입력이 취소되었습니다.");
     }
 
+    // 수정 취소 버튼 이벤트를 제어한다.
+    handleCancelByModify= () => {
+        const {editing} = this.state
+        this.setState({
+            editing : !editing
+        })
+        // 수정 입력폼의 입력란 값을 초기화한다.
+        document.getElementById("insertForm").reset();
+        // 취소 완료 메시지를 표시한다.
+        alert("수정 입력이 취소되었습니다.");
+    }
+
+
+
     render() {
         const { board_lists } = this.state;
+
         const {
             handleCreate,
             handleChange,
             handleModify,
             handleRemove,
             handleCancel,
-            handleShowRowData
+            handleShowRowData,
+            handleCancelByModify
         } = this;
 
         // 현재 시간으로 날짜를 설정하여 저장한다.
@@ -146,38 +188,30 @@ class App extends Component {
 
     return (
         <Fragment>
-
             <BoardVer001 form={(
                 // 게시글 작성폼을 표시한다.
+                <form id="insertForm">
                     <WriteForm
                         wrtDate={defDate}
                         onChange={handleChange}
                         onCreate={handleCreate}
                         onModify={handleModify}
                         onCancel={handleCancel}
+                        onCancelByModify={handleCancelByModify}
                         editing={this.state.editing}
+                        selectedRowData={this.state.selectedRowData}
                     />
+                </form>
+
             )}>
                {/* 게시글 목록을 표시한다.*/}
                 <div align="center">
                     <h2>게시글 목록</h2>
                 </div>
 
-                <BoardList2 lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData} >
-
-                </BoardList2>
+                <BoardList2 lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData}/>
 
             </BoardVer001>
-
-            {/* 입력값 확인 및 테스트용 태그
-            <div align="center">
-                <br/>
-                {JSON.stringify(board_lists)}
-                <br/>
-                <h4>상세보기 모달</h4>
-                <DetailModal contentLists={board_lists[0]}/>
-            </div>
-            */}
 
         </Fragment>
 

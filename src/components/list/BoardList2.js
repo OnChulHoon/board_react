@@ -28,23 +28,6 @@ class BoardList2 extends Component{
         })
     }
 
-    // handleRemoveRow = (i) => {
-    //     let rows = [...this.state.rows]
-    //     rows.splice(i, 1)
-    //     this.setState({
-    //         rows: rows
-    //     })
-    //     let boardNo = rows.original;
-    //     console.log( "[BoardList2] state.rows.i: ", this.state.rows);
-    //     console.log( "[BoardList2] i: ", i);
-    //     console.log( "[BoardList2] boardNo: ", boardNo);
-    //     alert("[BoardList2] 삭제 이벤트 발생!!" + boardNo);
-    // }
-
-    DoingSomethingFn = () => {
-        //this.props.callbackFromParent(this.props.lists);
-    }
-
     render(){
 
         // 목록에 표시할 다른 컴퍼넌트를 선택한 행의 값을 보내고 호출한다.
@@ -97,9 +80,9 @@ class BoardList2 extends Component{
             Cell: row => (
                 <div style={styles}>
                     {/*// 콘솔에서 데이터 확인용 로그 출력*/}
-                    {console.log("[BoardList2] selected.row: ", row)}
-                    {console.log("[BoardList2] selected.row.original: ", row.original)}
-                    <button onClick={() => this.props.showRowData(row.index)}>수정</button>
+                    {/*{console.log("[BoardList2] selected.row: ", row)}
+                    {console.log("[BoardList2] selected.row.original: ", row.original)}*/}
+                    <button onClick={() => this.props.showRowData(row.original, row.index)}>수정</button>
                     <button onClick={() => {if(window.confirm("[ "+ row.original.boardNo + " ] 번 글을 삭제하시겠습니까?")){this.props.onRemove(row.index)};}}>삭제</button>
                 </div>
             )
@@ -130,46 +113,6 @@ class BoardList2 extends Component{
                     // 다른 컨퍼넌트를 호출하여 목록에 표시하는 기능을 한다.
                     SubComponent = {subComponentMapper}
 
-
-                    // React-Table 라이브러리에서 td 태그의 행 데이터를 조회하는 기능을 한다.
-                    // getTdProps={(state, rowInfo, column, instance, idxNum) => {
-                    //     return {
-                    //
-                    //     onClick : (e, handleOriginal) => {
-                    //         this.setState({
-                    //            selected: rowInfo.index
-                    //         });
-                    //
-                    //             console.log("A Td Element was clicked!");
-                    //             console.log("it produced this event:", e);
-                    //             console.log("It was in this column:", column);
-                    //             console.log("It was in this row:", rowInfo);
-                    //             console.log("It was in this table instance:", instance);
-                    //
-                    //             console.log("rowInfo.index : ", rowInfo.index);
-                    //
-                    //             console.log("idxNumOrigin : ", idxNum);
-                    //
-                    //             idxNum = rowInfo.index;
-                    //
-                    //              // this.setState ({
-                    //              //            tempFunc : rowInfo.index
-                    //              //        });
-                    //
-                    //              console.log("idxNum : ", idxNum);
-                    //
-                    //              console.log("selected : ", this.state.selected);
-                    //
-                    //
-                    //             if (handleOriginal) {
-                    //                 handleOriginal();
-                    //             }
-                    //         }
-                    //
-                    //
-                    //
-                    //     };
-                    // }}
                     />
             </div>
         );

@@ -10,7 +10,7 @@ class BoardDetail extends Component {
 
     render() {
 
-        const { selectedRow } = this.props;
+        // const { selectedRow } = this.props;
 
         // console.log("[BoardDetail] selectedContent : ", selectedRow);
         // console.log("[BoardDetail] row.original.idx : ", selectedRow.idx);
