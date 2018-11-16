@@ -3,9 +3,6 @@ import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList2 from "./components/list/BoardList2";
-//import UpdateForm from "./components/modify/UpdateForm";
-//import DetailModal from "./components/modal/DetailModal";
-//import BoardDetail from "../detail/BoardDetail";
 
 class App extends Component {
 
@@ -20,13 +17,11 @@ class App extends Component {
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
             ],
-            rows: null,
             editing: false,
             selectedRowIdx: -1,
             selectedRowData: [
                 { idx: null, boardNo: null, title: null, writer: null, content: null, wrtDate: null }
             ],
-            newRowData: null,
 
         }
     }
@@ -58,6 +53,7 @@ class App extends Component {
         const newBoardLists = _.cloneDeep(board_lists);
         // const newBoardLists = this.state.board_lists;
 
+        // 사본 데이터에 새로 입력된 데이터를 추가한다.
         //newBoardLists.push(formData);
         newBoardLists.push( {
             idx: this.idx++,
@@ -72,6 +68,7 @@ class App extends Component {
         //console.log( '[App] this.state.board_lists: ', this.state.board_lists );
         //console.log( '[App] newBoardLists: ', newBoardLists );
 
+        // 원본 state 데이터에 새로 입력된 사본 데이터를 반영한다.
         this.setState( {
             board_lists: newBoardLists,
         } );
@@ -86,51 +83,64 @@ class App extends Component {
         //console.log("[App] selectedRowValue:", selectedRowValue);
         //console.log("[App] rowIndex:", rowIndex);
         const {editing} = this.state;
-        //console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
+        console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
 
         const selectedRowDataDef = selectedRowValue;
         this.setState({
             selectedRowData: selectedRowDataDef,
             editing: !editing,
-            selectedRowIdx: rowIndex,
+            selectedRowIdx: rowIndex
         });
         //console.log("[App] this.state.selectedRowData:", selectedRowData);
         //console.log("[App] this.props.selectedRowDataDef:", selectedRowDataDef);
     }
+
     // 수정한 데이터 값을 제어한다.
     handleModify = () => {
-
-        const { selectedRowData, ...restState } = this.state;
-        const {board_lists, selectedRowIdx} = this.state
+        // 선택한 열 데이터 값과 수정 상태 변경을 위한 state를 선언한다.
+        const { selectedRowData, editing } = this.state;
+        // 글 목록 데이터와 새로 입력된 데이터 값의 state를 선언한다.
+        const { board_lists, ...restState } = this.state;
+        // 새로 입력된 값을 변수에 저장한다.
         const newFormData = restState;
+        // state에 담긴 글 목록을 변수에 복사한다.
+        let updateBoardLists = _.cloneDeep(board_lists);
 
-        this.state = {newRowData:
-                [{idx: selectedRowData.idx,
-                boardNo: selectedRowData.boardNo,
-                title: newFormData.title,
-                writer: selectedRowData.writer,
-                wrtDate: selectedRowData.wrtDate,
-                content: newFormData.content}]}
+        // 콘솔에서 데이터 확인용 로그 출력
+        //console.log( '[App] newFormData: ', newFormData );
 
+        // 선택된 열의 인덱스 값을 변수에 저장한다.
+        const selectedRowIdx = this.state.selectedRowIdx;
 
-        console.log( '[App] newFormData: ', newFormData );
-        console.log( '[App] this.state.newRowData: ', this.state.newRowData );
+        // 콘솔에서 데이터 확인용 로그 출력
+        //console.log( '[App] selectedRowIdx: ', selectedRowIdx );
 
+        // 복사한 글 목록 데이터에 수정된 데이터를 반영하여 변경한다.
+        updateBoardLists.splice(selectedRowIdx, 1,
+            {idx: selectedRowData.idx,
+            boardNo: selectedRowData.boardNo,
+            title: newFormData.title,
+            writer: selectedRowData.writer,
+            wrtDate: selectedRowData.wrtDate,
+            content: newFormData.content})
 
-        //board_lists.splice(selectedRowIdx,1,this.state.newRowData);
-
+        // 원본 state 데이터에 수정된 사본 데이터를 반영하고 수정 상태를 변경한다.
         this.setState( {
-            ...board_lists.splice(selectedRowIdx,1,this.state.newRowData)
+            board_lists: updateBoardLists,
+            editing: !editing
         } );
-        //console.log( '[App] info.idx: ', info.idx );
-        console.log( '[App] this.state.board_lists: ', this.state.board_lists );
+
+        // 콘솔에서 데이터 확인용 로그 출력
+        //console.log( '[App] this.state.board_lists: ', this.state.board_lists );
+
         // 입력폼의 입력란 값을 초기화한다.
         document.getElementById("insertForm").reset();
-        // 등록 성공 메시지를 표시한다.
+        // 수정 성공 메시지를 표시한다.
         alert("게시글 수정이 완료되었습니다.");
     }
+
     // 선택된 데이터를 삭제한다.
-    handleRemove = (i) => {
+    handleRemove = (selectedRowIndex) => {
         // 콘솔에서 데이터 확인용 로그 출력
         //console.log("[App] i(row.index): ", i );
         //console.log("[App] this.state.board_lists: ", this.state.board_lists);
@@ -138,7 +148,7 @@ class App extends Component {
         let board_lists_refresh = [...this.state.board_lists];
         // 선택한 행의 인덱스 값의 데이터를 제거한다.
         this.setState({
-            ...board_lists_refresh.splice(i, 1),
+            ...board_lists_refresh.splice(selectedRowIndex, 1),
             board_lists: board_lists_refresh
         });
         // 콘솔에서 데이터 확인용 로그 출력
@@ -146,6 +156,7 @@ class App extends Component {
         alert("게시글이 삭제되었습니다.");
 
     }
+
     // 취소 버튼 이벤트를 제어한다.
     handleCancel= () => {
         // 입력폼의 입력란 값을 초기화한다.
@@ -156,6 +167,7 @@ class App extends Component {
 
     // 수정 취소 버튼 이벤트를 제어한다.
     handleCancelByModify= () => {
+        // 수정 상태를 변경한다.
         const {editing} = this.state
         this.setState({
             editing : !editing
@@ -165,7 +177,6 @@ class App extends Component {
         // 취소 완료 메시지를 표시한다.
         alert("수정 입력이 취소되었습니다.");
     }
-
 
 
     render() {

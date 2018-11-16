@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-//import DetailModal from "../modal/DetailModal";
 import BoardDetail from "../detail/BoardDetail";
 
 const styles = {
@@ -30,7 +29,7 @@ class BoardList2 extends Component{
 
     render(){
 
-        // 목록에 표시할 다른 컴퍼넌트를 선택한 행의 값을 보내고 호출한다.
+        // 목록에 표시할 다른 컴포넌트를 선택한 행의 값을 보내고 호출한다.
         const subComponentMapper = row => {
             return (
                 <div>
@@ -80,8 +79,8 @@ class BoardList2 extends Component{
             Cell: row => (
                 <div style={styles}>
                     {/*// 콘솔에서 데이터 확인용 로그 출력*/}
-                    {/*{console.log("[BoardList2] selected.row: ", row)}
-                    {console.log("[BoardList2] selected.row.original: ", row.original)}*/}
+                    {/*{console.log("[BoardList2] selected.row: ", row)}*/}
+                    {/*{console.log("[BoardList2] selected.row.original: ", row.original)}*/}
                     <button onClick={() => this.props.showRowData(row.original, row.index)}>수정</button>
                     <button onClick={() => {if(window.confirm("[ "+ row.original.boardNo + " ] 번 글을 삭제하시겠습니까?")){this.props.onRemove(row.index)};}}>삭제</button>
                 </div>
