@@ -1,8 +1,22 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment, PropTypes } from 'react';
 import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList2 from "./components/list/BoardList2";
+
+//import Counter from './components/Counter';
+import Login from './components/account/Login';
+
+//import  { BrowserRouter } from 'react-router-dom';
+//import  { Provider } from 'react-redux';
+
+const propTypes = {
+
+}
+
+const defalutProps = {
+
+}
 
 class App extends Component {
 
@@ -11,8 +25,8 @@ class App extends Component {
     boardNo = 2
 
     // 초기 state 값을 지정한다.
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             board_lists: [
                 { idx: 0, boardNo: 1, title: "글제목", writer: "관리자", content: "내용", wrtDate: "2018-11-07" }
@@ -24,6 +38,14 @@ class App extends Component {
             ],
 
         }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("prevState : ", prevState.valueOf());
+
+
+
+
     }
 
     // 컴포넌트 렌더 후에 state 값을 업데이트한다.
@@ -40,7 +62,7 @@ class App extends Component {
             [e.target.name] : e.target.value
         });
         // 콘솔에서 데이터 확인용 로그 출력
-        console.log("[App] New State: ", this.state);
+        //console.log("[App] New State: ", this.state);
     }
 
     // 작성 버튼을 누르면 입력란에 입력된 데이터 값을 state에 지정한 맵 형식으로 업데이트한다.
@@ -80,19 +102,20 @@ class App extends Component {
 
     // 선택열 데이터 값으로 제어
     handleShowRowData = (selectedRowValue, rowIndex) => {
+        // 콘솔에서 데이터 확인용 로그 출력
         //console.log("[App] selectedRowValue:", selectedRowValue);
         //console.log("[App] rowIndex:", rowIndex);
-        const {editing} = this.state;
-        console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
 
-        const selectedRowDataDef = selectedRowValue;
+        const {editing} = this.state;
+
         this.setState({
-            selectedRowData: selectedRowDataDef,
+            selectedRowData: selectedRowValue,
             editing: !editing,
             selectedRowIdx: rowIndex
         });
-        //console.log("[App] this.state.selectedRowData:", selectedRowData);
-        //console.log("[App] this.props.selectedRowDataDef:", selectedRowDataDef);
+        // 콘솔에서 데이터 확인용 로그 출력
+        console.log("[App] this.state.selectedRowIdx:", this.state.selectedRowIdx);
+        //console.log("[App] this.state.selectedRowData:", this.state.selectedRowData);
     }
 
     // 수정한 데이터 값을 제어한다.
@@ -101,21 +124,18 @@ class App extends Component {
         const { selectedRowData, editing } = this.state;
         // 글 목록 데이터와 새로 입력된 데이터 값의 state를 선언한다.
         const { board_lists, ...restState } = this.state;
+        // 선택된 열의 인덱스 값을 변수에 저장한다.
+        const selectedRowIdx = this.state.selectedRowIdx;
         // 새로 입력된 값을 변수에 저장한다.
         const newFormData = restState;
         // state에 담긴 글 목록을 변수에 복사한다.
         let updateBoardLists = _.cloneDeep(board_lists);
 
         // 콘솔에서 데이터 확인용 로그 출력
+        //console.log( '[App] selectedRowIdx: ', selectedRowIdx );
         //console.log( '[App] newFormData: ', newFormData );
 
-        // 선택된 열의 인덱스 값을 변수에 저장한다.
-        const selectedRowIdx = this.state.selectedRowIdx;
-
-        // 콘솔에서 데이터 확인용 로그 출력
-        //console.log( '[App] selectedRowIdx: ', selectedRowIdx );
-
-        // 복사한 글 목록 데이터에 수정된 데이터를 반영하여 변경한다.
+        // 복사한 글 목록 데이터에 수정된 데이터를 반영한다.
         updateBoardLists.splice(selectedRowIdx, 1,
             {idx: selectedRowData.idx,
             boardNo: selectedRowData.boardNo,
@@ -144,13 +164,16 @@ class App extends Component {
         // 콘솔에서 데이터 확인용 로그 출력
         //console.log("[App] i(row.index): ", i );
         //console.log("[App] this.state.board_lists: ", this.state.board_lists);
+
         // 현재 state에 담아있는 board_lists 값들을 참조하는 변수를 만든다.
         let board_lists_refresh = [...this.state.board_lists];
+
         // 선택한 행의 인덱스 값의 데이터를 제거한다.
         this.setState({
             ...board_lists_refresh.splice(selectedRowIndex, 1),
             board_lists: board_lists_refresh
         });
+
         // 콘솔에서 데이터 확인용 로그 출력
         //console.log('[App] let board_lists_refresh after splice: ', board_lists_refresh);
         alert("게시글이 삭제되었습니다.");
@@ -161,6 +184,12 @@ class App extends Component {
     handleCancel= () => {
         // 입력폼의 입력란 값을 초기화한다.
         document.getElementById("insertForm").reset();
+        let newState = _.cloneDeep(this.state);
+
+        this.setState({
+            state: {title: "", writer: "", content: "", wrtDate: ""}
+        })
+        console.log("newState : ", newState.title);
         // 취소 완료 메시지를 표시한다.
         alert("입력이 취소되었습니다.");
     }
@@ -197,8 +226,11 @@ class App extends Component {
         currDate.setDate(currDate.getDate());
         const defDate = currDate.toISOString().substr(0,10);
 
+
     return (
         <Fragment>
+
+
             <BoardVer001 form={(
                 // 게시글 작성폼을 표시한다.
                 <form id="insertForm">
@@ -215,6 +247,7 @@ class App extends Component {
                 </form>
 
             )}>
+                <Login/>
                {/* 게시글 목록을 표시한다.*/}
                 <div align="center">
                     <h2>게시글 목록</h2>
@@ -224,10 +257,14 @@ class App extends Component {
 
             </BoardVer001>
 
+
         </Fragment>
 
     );
   }
 }
+
+App.propTypes = propTypes;
+App.defaultProps = defalutProps;
 
 export default App;

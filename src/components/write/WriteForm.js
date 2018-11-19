@@ -51,6 +51,9 @@ const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate, onModif
     );
 
     }else {
+        //const formTitle = selectedRowData.title ? selectedRowData.title : title;
+        const rowTitle = selectedRowData.title;
+
         return (
 
             <div className="form">
@@ -59,7 +62,7 @@ const WriteForm = ({title, writer, wrtDate, content, onChange, onCreate, onModif
                         <label>
                             제&nbsp;&nbsp;목&nbsp;&nbsp;:
                             {console.log("[WriteForm By Update] data read test: ", selectedRowData.title)}
-                            <input type="text" name="title" value={title} onChange={onChange} style={inputStyles} defaultValue={selectedRowData.title} />
+                            <input type="text" name="title" value={title} onChange={onChange} style={inputStyles} defaultValue={rowTitle}/>
                         </label>
                     </div>
                     <div>
