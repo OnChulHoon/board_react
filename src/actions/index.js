@@ -1,7 +1,7 @@
 import * as types from './userAction';
 
-export function login() {
+export function login(id, password) {
     return {
-        types : types.login()
+        types : types.login(id, password)
     }
 }

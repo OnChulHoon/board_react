@@ -1,8 +1,8 @@
 //import React from 'react';
-import BoardList2 from "./components/list/BoardList2";
+import BoardList from "./components/list/BoardList";
 import ReactTable from "react-table";
 
-BoardList2.propTypes = {
+BoardList.propTypes = {
     propTypes : {
         boardNo : ReactTable.PropTypes.number,
         title : ReactTable.PropTypes.string,

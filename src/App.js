@@ -2,13 +2,8 @@ import React, { Component, Fragment, PropTypes } from 'react';
 import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
-import BoardList2 from "./components/list/BoardList2";
+import BoardList from "./components/list/BoardList";
 
-//import Counter from './components/Counter';
-import Login from './components/account/Login';
-
-//import  { BrowserRouter } from 'react-router-dom';
-//import  { Provider } from 'react-redux';
 
 const propTypes = {
 
@@ -40,16 +35,9 @@ class App extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("prevState : ", prevState.valueOf());
-
-
-
-
-    }
-
-    // 컴포넌트 렌더 후에 state 값을 업데이트한다.
+    // 컴포넌트 렌더 후 동작한다.
     componentDidMount(){
+        // 컴포넌트 렌더 후에 state 값을 업데이트한다.
         this.setState({
             // 현재 시간의 날짜로 지정된 값을 불러와 지정한다.
             wrtDate : document.getElementById("wrtDate").value
@@ -226,6 +214,8 @@ class App extends Component {
         currDate.setDate(currDate.getDate());
         const defDate = currDate.toISOString().substr(0,10);
 
+        //const user = [{id: this.state.id, pw: this.state.pw}] = this.props;
+
 
     return (
         <Fragment>
@@ -247,13 +237,12 @@ class App extends Component {
                 </form>
 
             )}>
-                <Login/>
                {/* 게시글 목록을 표시한다.*/}
                 <div align="center">
                     <h2>게시글 목록</h2>
                 </div>
 
-                <BoardList2 lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData}/>
+                <BoardList lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData}/>
 
             </BoardVer001>
 

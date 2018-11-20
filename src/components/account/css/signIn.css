@@ -1,0 +1,36 @@
+@import '~antd/dist/antd.css';
+
+#signInForm{
+    width: 50%;
+    min-width: 250px;
+    max-width: 400px;
+    padding-top: 10%;
+    margin: 0 auto;
+}
+#rememberCheck {
+    text-align: left;
+}
+#submitBtn {
+    width: 100%;
+}
+#findIdAndPw {
+    margin-left: 22%;
+}
+
+#signUpForm {
+    width: 75%;
+    max-width: 600px;
+    padding-top: 5%;
+    margin: 0 auto;
+}
+
+#components-form-demo-normal-login .login-form {
+    max-width: 300px;
+}
+#components-form-demo-normal-login .login-form-forgot {
+    float: right;
+}
+#components-form-demo-normal-login .login-form-button {
+    width: 100%;
+
+}

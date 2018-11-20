@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../../actions';
+import * as actions from '../../actions';
+
 
 class Login extends Component {
     static propTypes = {
@@ -32,7 +34,7 @@ class Login extends Component {
                         <span>비밀번호</span>
                         <input type="password" ref={(ref) => { this.password = ref; }} />
                     </label>
-                    <button type="submit">로그인</button>
+                    <button type="submit">Login</button>
                 </form>
         );
     }
@@ -41,5 +43,11 @@ class Login extends Component {
 function mapStateToProps(state) {
     return { user: state.user };
 }
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         handleSubmit: () => {dispatch(actions.login())}
+//     }
+// }
 
 export default connect(mapStateToProps)(Login);

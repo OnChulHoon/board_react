@@ -3,7 +3,7 @@ import { login, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/u
 const initialState = {
     isLoggedIn: false,
     fetchingUpdate: false,
-    user: {}
+    user: {id: "admin", pw: "1234"}
 };
 
 const userReducer = (state = initialState, action) => {
