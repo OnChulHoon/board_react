@@ -7,7 +7,7 @@
     font-size: 1.25rem;
     outline: none;
     border: none;
-    border-bottom: 1px solid #c5f6fa;
+    border-bottom: 1px solid #40A9FF;
     padding-left: 10px;
 }
 
@@ -18,7 +18,7 @@
     padding-right: 1rem;
     margin-top: 10px;
     margin-left: 390px;
-    background: #22b8cf;
+    background: #1890ff;
     border-radius: 3px;
     color: white;
     font-weight: 600;
@@ -34,7 +34,7 @@
 
     margin-left: 390px;
     margin-right: 0px;
-    background: #22b8cf;
+    background: #1890ff;
     border-radius: 3px;
     color: white;
     font-weight: 600;
@@ -50,7 +50,7 @@
 
     margin-left: 10px;
     margin-right: 0px;
-    background: #22b8cf;
+    background: #1890ff;
     border-radius: 3px;
     color: white;
     font-weight: 600;
@@ -59,13 +59,13 @@
 }
 
 .write-button:hover {
-    background: #3bc9db;
+    background: #40A9FF;
 }
 
 .modify-button:hover {
-    background: #3bc9db;
+    background: #40A9FF;
 }
 
 .cancel-button:hover {
-    background: #3bc9db;
+    background: #40A9FF;
 }

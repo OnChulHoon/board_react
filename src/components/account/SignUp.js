@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Select, Checkbox, Button } from 'antd';
 import './css/signIn.css';
+import { Link } from 'react-router';
+
+const style = {
+    width : "100%"
+}
+const styleTitle ={
+    textAlign: "center",
+    minWidth: "250px",
+    maxWidth: "500px",
+    paddingLeft: "250px"
+}
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
 
-const residences = [{
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [{
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [{
-            value: 'xihu',
-            label: 'West Lake',
-        }],
-    }],
-}, {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-        }],
-    }],
-}];
 
 class SignUp extends Component {
     constructor(){
@@ -71,19 +58,8 @@ class SignUp extends Component {
         callback();
     }
 
-    handleWebsiteChange = (value) => {
-        let autoCompleteResult;
-        if (!value) {
-            autoCompleteResult = [];
-        } else {
-            autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-        }
-        this.setState({ autoCompleteResult });
-    }
-
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
 
         const formItemLayout = {
             labelCol: {
@@ -116,21 +92,19 @@ class SignUp extends Component {
             </Select>
         );
 
-        const websiteOptions = autoCompleteResult.map(website => (
-            <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-        ));
-
         return (
             <div id="signUpForm">
-                <div align="center">
-                    <h3>회원 가입</h3>
+                <div style={styleTitle}>
+                    <h3>회원 등록</h3>
                 </div>
                 <br/>
+
             <Form onSubmit={this.handleSubmit}>
+
                 <FormItem
                     {...formItemLayout}
                     label={(
-                        <span>ID&nbsp;</span>
+                        <span>아이디&nbsp;</span>
                     )}
                 >
                     {getFieldDecorator('id', {
@@ -142,7 +116,7 @@ class SignUp extends Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label="Password"
+                    label="비밀번호"
                 >
                     {getFieldDecorator('password', {
                         rules: [{
@@ -156,7 +130,7 @@ class SignUp extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Confirm Password"
+                    label="비밀번호 확인"
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
@@ -170,7 +144,7 @@ class SignUp extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="E-mail"
+                    label="이메일"
                 >
                     {getFieldDecorator('email', {
                         rules: [{
@@ -186,7 +160,7 @@ class SignUp extends Component {
                     {...formItemLayout}
                     label={(
                         <span>
-              Nickname&nbsp;
+                                별명&nbsp;
                             <Tooltip title="What do you want others to call you?">
                 <Icon type="question-circle-o" />
               </Tooltip>
@@ -201,18 +175,7 @@ class SignUp extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Habitual Residence"
-                >
-                    {getFieldDecorator('residence', {
-                        initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                        rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }],
-                    })(
-                        <Cascader options={residences} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Phone Number"
+                    label="휴대전화번호"
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
@@ -220,49 +183,17 @@ class SignUp extends Component {
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                     )}
                 </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Website"
-                >
-                    {getFieldDecorator('website', {
-                        rules: [{ required: true, message: 'Please input website!' }],
-                    })(
-                        <AutoComplete
-                            dataSource={websiteOptions}
-                            onChange={this.handleWebsiteChange}
-                            placeholder="website"
-                        >
-                            <Input />
-                        </AutoComplete>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Captcha"
-                    extra="We must make sure that your are a human."
-                >
-                    <Row gutter={8}>
-                        <Col span={12}>
-                            {getFieldDecorator('captcha', {
-                                rules: [{ required: true, message: 'Please input the captcha you got!' }],
-                            })(
-                                <Input />
-                            )}
-                        </Col>
-                        <Col span={12}>
-                            <Button>Get captcha</Button>
-                        </Col>
-                    </Row>
-                </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     {getFieldDecorator('agreement', {
                         valuePropName: 'checked',
                     })(
-                        <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+                        <Checkbox>개인정보 제공 및 서비스 이용에 관한 <Link to="">약관</Link>을 읽고 동의합니다.</Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">Register</Button>
+                    <div>
+                        <Button style={style} type="primary" htmlType="submit">회원 등록</Button>
+                    </div>
                 </FormItem>
             </Form>
         </div>

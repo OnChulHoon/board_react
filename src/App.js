@@ -1,17 +1,17 @@
-import React, { Component, Fragment, PropTypes } from 'react';
+import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList from "./components/list/BoardList";
 
 
-const propTypes = {
-
-}
-
-const defalutProps = {
-
-}
+// const propTypes = {
+//
+// }
+//
+// const defalutProps = {
+//
+// }
 
 class App extends Component {
 
@@ -195,7 +195,6 @@ class App extends Component {
         alert("수정 입력이 취소되었습니다.");
     }
 
-
     render() {
         const { board_lists } = this.state;
 
@@ -214,13 +213,8 @@ class App extends Component {
         currDate.setDate(currDate.getDate());
         const defDate = currDate.toISOString().substr(0,10);
 
-        //const user = [{id: this.state.id, pw: this.state.pw}] = this.props;
-
-
     return (
         <Fragment>
-
-
             <BoardVer001 form={(
                 // 게시글 작성폼을 표시한다.
                 <form id="insertForm">
@@ -235,25 +229,24 @@ class App extends Component {
                         selectedRowData={this.state.selectedRowData}
                     />
                 </form>
-
             )}>
+                <br/>
                {/* 게시글 목록을 표시한다.*/}
                 <div align="center">
                     <h2>게시글 목록</h2>
                 </div>
+                <br/>
 
                 <BoardList lists={board_lists} onRemove={handleRemove} showRowData={handleShowRowData}/>
 
             </BoardVer001>
-
-
         </Fragment>
 
     );
   }
 }
 
-App.propTypes = propTypes;
-App.defaultProps = defalutProps;
+// App.propTypes = propTypes;
+// App.defaultProps = defalutProps;
 
 export default App;
