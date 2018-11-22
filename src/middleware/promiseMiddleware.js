@@ -2,7 +2,10 @@ import axios from 'axios';
 
 export default () => {
     return next => action => {
-        const { promise, type, ...rest } = action;
+
+        const { promise, type, ...rest } = action.types;
+        console.log("[promiseMiddleware]type : ", type);
+
         next({ ...rest, type: `${type}_REQUEST` });
         return axios({
             method: promise.method,

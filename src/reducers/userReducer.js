@@ -1,12 +1,14 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/userAction';
+import { signin, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/userAction';
 
-const initialState = {
+const defaultState = {
     isLoggedIn: false,
     fetchingUpdate: false,
-    user: {id: "admin", pw: "1234"}
+    user: {}
 };
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = defaultState, action) => {
+    console.log("[userReducer]defaultState : ",state);
+    console.log("[userReducer]action : ",action);
     switch (action.type) {
         case LOGIN_REQUEST:
             return {
@@ -30,4 +32,4 @@ const userReducer = (state = initialState, action) => {
         }
     }
 };
-export  default userReducer;
+export default userReducer;
