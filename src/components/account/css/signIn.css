@@ -13,8 +13,8 @@
 #submitBtn {
     width: 100%;
 }
-#findIdAndPw {
-    margin-left: 22%;
+#login-form-footer {
+    text-align: center;
 }
 
 #signUpForm {

@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 //import thunk from 'redux-thunk';
 import './include/bootstrap'
-//import store from './store/configureStore';
+//import configureStore from './store/configureStore';
 import promiseMiddleware from './middleware/promiseMiddleware';
 
 //const middleware = [ thunk ]
@@ -16,6 +16,7 @@ const store = createStore(
     reducers,
     applyMiddleware(compose(promiseMiddleware))
 )
+
 
 console.log("defaultStore - store.getState() : ", store.getState());
 

@@ -1,4 +1,4 @@
-import { signin, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/userAction';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/userAction';
 
 const defaultState = {
     isLoggedIn: false,
@@ -7,8 +7,8 @@ const defaultState = {
 };
 
 const userReducer = (state = defaultState, action) => {
-    console.log("[userReducer]defaultState : ",state);
-    console.log("[userReducer]action : ",action);
+    //console.log("[userReducer]defaultState : ",state);
+    //console.log("[userReducer]action : ",action);
     switch (action.type) {
         case LOGIN_REQUEST:
             return {
@@ -32,4 +32,5 @@ const userReducer = (state = defaultState, action) => {
         }
     }
 };
+
 export default userReducer;

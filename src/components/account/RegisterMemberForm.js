@@ -17,7 +17,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 
-class SignUp extends Component {
+class RegisterMemberForm extends Component {
     constructor(){
         super();
         this.state = {
@@ -201,4 +201,6 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+const RegisterMember = Form.create()(RegisterMemberForm);
+
+export default RegisterMember;
