@@ -16,7 +16,7 @@ const Root = () => {
         <Route path = "/" component = {Home}>
 
             <IndexRoute component = {Login} />
-            <Route path = "/app" component={App}/>
+            <Route path = "/app" component={App} />
             <Route path = "/register-member" component={RegisterMember}/>
             <Route path = "/login" component={Login}/>
         </Route>

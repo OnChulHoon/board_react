@@ -19,7 +19,7 @@ app.listen(port, () => {
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(mongoURI).then(() => {
+mongoose.connect(mongoURI, { useNewUrlParser: true }).then(() => {
     console.log("connected to mongodb");
 }).catch((e) => {
     console.error(e);

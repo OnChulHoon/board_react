@@ -9,13 +9,22 @@ import { Provider } from 'react-redux';
 //import thunk from 'redux-thunk';
 import './include/bootstrap'
 //import configureStore from './store/configureStore';
-import promiseMiddleware from './middleware/promiseMiddleware';
+import promiseMiddleware from './middlewares/promiseMiddleware';
+
+const Koa = require('koa');
+const Router = require('koa-router');
+
+const app = new Koa();
+const router = new Router();
+
+app.use(router.routes()).use(router.allowedMethods());
 
 //const middleware = [ thunk ]
 const store = createStore(
     reducers,
     applyMiddleware(compose(promiseMiddleware))
 )
+
 
 
 console.log("defaultStore - store.getState() : ", store.getState());
