@@ -19,7 +19,7 @@ class Login extends Component {
         return (
             <LoginForm
                 isLoggedIn={user.isLoggedIn}
-                login={(id, pw) => dispatch(login(id, pw))} />
+                login={(userId, password) => dispatch(login(userId, password))} />
 
         );
     }

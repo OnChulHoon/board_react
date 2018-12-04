@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import './css/signIn.css';
 import { Link } from 'react-router';
+import App from '../../App';
 
 const FormItem = Form.Item;
 
@@ -12,9 +13,9 @@ class LoginForm extends Component {
         const { login } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const id = values.id;
-                const pw = values.pw;
-                login(id, pw);
+                const userId = values.userId;
+                const password = values.password;
+                login(userId, password);
             }
         });
     }
@@ -26,7 +27,8 @@ class LoginForm extends Component {
 
         return (
             isLoggedIn
-                ? <div>로그인 성공</div>
+                ? <div> <App/> </div>
+
            : <Fragment>
                 <div id="signInForm">
                     <div>
@@ -34,14 +36,14 @@ class LoginForm extends Component {
                     </div>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <FormItem>
-                            {getFieldDecorator('id', {
+                            {getFieldDecorator('userId', {
                                 rules: [{ required: true, message: '아이디를 입력해주세요.' }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="ID" />
                             )}
                         </FormItem>
                         <FormItem>
-                            {getFieldDecorator('pw', {
+                            {getFieldDecorator('password', {
                                 rules: [{ required: true, message: '비밀번호를 입력해주세요.' }],
                             })(
                                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="PASSWORD" />

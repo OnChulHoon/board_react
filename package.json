@@ -52,5 +52,6 @@
   "devDependencies": {
     "colors": "^1.3.2",
     "nodemon": "^1.18.6"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
