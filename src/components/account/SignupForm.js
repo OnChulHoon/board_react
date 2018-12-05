@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Tooltip, Icon, Select, Checkbox, Button } from 'antd';
-import './css/signIn.css';
+import './css/account.css';
 import { Link } from 'react-router';
 
 const style = {
@@ -17,7 +17,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 
-class RegisterMemberForm extends Component {
+class SignupForm extends Component {
     constructor(){
         super();
         this.state = {
@@ -26,12 +26,20 @@ class RegisterMemberForm extends Component {
         };
     }
 
-
     handleSubmit = (e) => {
         e.preventDefault();
+        const { signup } = this.props;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const userId = values.userId;
+                const password = values.password;
+                const username = values.username;
+                const email = values.email;
+                const nickname = values.nickname;
+                const phoneNumber = values.phoneNumber;
+                const countryCode = values.countryCode;
+                signup(userId, password, username, email, nickname, phoneNumber, countryCode);
             }
         });
     }
@@ -59,6 +67,7 @@ class RegisterMemberForm extends Component {
     }
 
     render() {
+        const { signupSuccess } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         const formItemLayout = {
@@ -83,7 +92,7 @@ class RegisterMemberForm extends Component {
                 },
             },
         };
-        const prefixSelector = getFieldDecorator('prefix', {
+        const prefixSelector = getFieldDecorator('countryCode', {
             initialValue: '86',
         })(
             <Select style={{ width: 70 }}>
@@ -91,8 +100,19 @@ class RegisterMemberForm extends Component {
                 <Option value="87">+87</Option>
             </Select>
         );
+        let rootLoginAuth = this.props;
+        const loginAuth = rootLoginAuth.loginAuth;
 
         return (
+            loginAuth ?
+                <div>
+                    {alert("로그인이 되어 있습니다. 로그아웃 하신 후 등록해주세요.")}
+                    {window.location.href = "/app"}
+                </div>
+                :
+            signupSuccess ?
+                <div>{window.location.href = "/login"}</div>
+                :
             <div id="signUpForm">
                 <div style={styleTitle}>
                     <h3>회원 등록</h3>
@@ -107,7 +127,7 @@ class RegisterMemberForm extends Component {
                         <span>아이디&nbsp;</span>
                     )}
                 >
-                    {getFieldDecorator('id', {
+                    {getFieldDecorator('userId', {
                         rules: [{ required: true, message: 'Please input your id!', whitespace: true }],
                     })(
                         <Input />
@@ -144,6 +164,20 @@ class RegisterMemberForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
+                    label={(
+                        <span>
+                                이름&nbsp;
+                        </span>
+                    )}
+                >
+                    {getFieldDecorator('username', {
+                        rules: [{ required: true, message: 'Please input your your name!', whitespace: true }],
+                    })(
+                        <Input />
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
                     label="이메일"
                 >
                     {getFieldDecorator('email', {
@@ -162,9 +196,9 @@ class RegisterMemberForm extends Component {
                         <span>
                                 별명&nbsp;
                             <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
+                                <Icon type="question-circle-o" />
+                            </Tooltip>
+                        </span>
                     )}
                 >
                     {getFieldDecorator('nickname', {
@@ -177,7 +211,7 @@ class RegisterMemberForm extends Component {
                     {...formItemLayout}
                     label="휴대전화번호"
                 >
-                    {getFieldDecorator('phone', {
+                    {getFieldDecorator('phoneNumber', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
                     })(
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
@@ -201,6 +235,6 @@ class RegisterMemberForm extends Component {
     }
 }
 
-const RegisterMember = Form.create()(RegisterMemberForm);
+const Signup = Form.create()(SignupForm);
 
-export default RegisterMember;
+export default Signup;

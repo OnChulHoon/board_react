@@ -7,18 +7,20 @@ import PropTypes from "prop-types";
 class Login extends Component {
 
     static propTypes = {
-        user: PropTypes.objectOf(PropTypes.any).isRequired,
+        userLogin: PropTypes.objectOf(PropTypes.any).isRequired,
         dispatch: PropTypes.func.isRequired,
     };
 
     render() {
 
-        const { user, dispatch } = this.props;
-        console.log("[container-Login] user : ", user);
+        let root = this.props;
+        const loginAuth = root.routes[0].loginAuth;
+
+        const { userLogin, dispatch } = this.props;
 
         return (
             <LoginForm
-                isLoggedIn={user.isLoggedIn}
+                isLoggedIn={userLogin.isLoggedIn} loginAuth={loginAuth}
                 login={(userId, password) => dispatch(login(userId, password))} />
 
         );
@@ -26,7 +28,7 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    return { user: state.user }
+    return { userLogin: state.userLogin }
 }
 
 export default connect(mapStateToProps)(Login);

@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import './css/signIn.css';
+import './css/account.css';
 import { Link } from 'react-router';
-import App from '../../App';
 
 const FormItem = Form.Item;
 
@@ -22,14 +21,25 @@ class LoginForm extends Component {
 
     render() {
 
+        let rootLoginAuth = this.props;
+        const loginAuth = rootLoginAuth.loginAuth;
+
         const { isLoggedIn } = this.props;
         const { getFieldDecorator } = this.props.form;
 
-        return (
-            isLoggedIn
-                ? <div> <App/> </div>
 
-           : <Fragment>
+        return (
+            loginAuth ?
+            <div>
+                {alert("이미 로그인이 되어 있습니다. 애플리케이션으로 이동합니다.")}
+                {window.location.href = "/app"}
+            </div>
+                :
+            isLoggedIn
+                ?
+                <div>{window.location.href = "/app"}</div>
+                :
+            <Fragment>
                 <div id="signInForm">
                     <div>
                         <h1>로그인</h1>
@@ -68,13 +78,14 @@ class LoginForm extends Component {
                                     <Link className="login-form-forgot" to="">아이디/비밀번호 찾기</Link>
                                 </div>
                                 <div>
-                                    아직 회원이 아니신가요? <Link to="/register-member">회원가입</Link>
+                                    아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
                                 </div>
                             </div>
                         </FormItem>
                     </Form>
                 </div>
             </Fragment>
+
         );
     }
 }

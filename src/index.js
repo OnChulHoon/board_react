@@ -14,14 +14,13 @@ import promiseMiddleware from './middlewares/promiseMiddleware';
 const store = createStore(
     reducers,
     applyMiddleware(compose(promiseMiddleware))
-)
+);
 
-
-console.log("defaultStore - store.getState() : ", store.getState());
+//console.log("defaultStore - store.getState() : ", store.getState());
 
 ReactDOM.render(
     <Provider store={store}>
-        <Root/>
+        <Root />
     </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

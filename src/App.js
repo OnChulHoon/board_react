@@ -37,11 +37,15 @@ class App extends Component {
 
     // 컴포넌트 렌더 후 동작한다.
     componentDidMount(){
-        // 컴포넌트 렌더 후에 state 값을 업데이트한다.
-        this.setState({
-            // 현재 시간의 날짜로 지정된 값을 불러와 지정한다.
-            wrtDate : document.getElementById("wrtDate").value
-        });
+        const loginAuth = this.props;
+
+        if(loginAuth === true){
+            // 컴포넌트 렌더 후에 state 값을 업데이트한다.
+            this.setState({
+                // 현재 시간의 날짜로 지정된 값을 불러와 지정한다.
+                wrtDate : document.getElementById("wrtDate").value
+            });
+        }
     }
 
     // 입력란이 변경될 때마다 조회하여 state 값을 업데이트한다.
@@ -213,7 +217,11 @@ class App extends Component {
         currDate.setDate(currDate.getDate());
         const defDate = currDate.toISOString().substr(0,10);
 
+        let root = this.props;
+        const loginAuth = root.route.loginAuth;
+
     return (
+        loginAuth ?
         <Fragment>
             <BoardVer001 form={(
                 // 게시글 작성폼을 표시한다.
@@ -230,6 +238,9 @@ class App extends Component {
                     />
                 </form>
             )}>
+                <div align="right">
+                    <button>로그아웃</button>
+                </div>
                 <br/>
                {/* 게시글 목록을 표시한다.*/}
                 <div align="center">
@@ -241,6 +252,10 @@ class App extends Component {
 
             </BoardVer001>
         </Fragment>
+            : <div>
+                {alert("회원정보가 없습니다. 로그인 후 이용해주세요.")}
+                {window.location.href = "/login"}
+                </div>
 
     );
   }

@@ -2,27 +2,28 @@ import React from 'react';
 import App from './App';
 import Home from './Home';
 import Login from './containers/account/Login';
-import RegisterMemberForm from "./components/account/RegisterMemberForm";
-import {Form} from "antd";
-import {browserHistory, IndexRoute, Route, Router} from "react-router";
+import Signup from "./containers/account/Signup";
+import { browserHistory, IndexRoute, Route, Router } from "react-router";
 
-const RegisterMember = Form.create()(RegisterMemberForm);
+const loginUserId = window.sessionStorage.loginUserId;
+let loginAuth = false;
+if(loginUserId !== undefined){
+    loginAuth = true;
+}
+console.log("[Root] sessionStorage.loginUserId : ",loginUserId);
+console.log("[Root] loginAuth : ", loginAuth);
 
 
 const Root = () => {
-
     return (
-    <Router history = {browserHistory}>
-        <Route path = "/" component = {Home}>
-
-            <IndexRoute component = {Login} />
-            <Route path = "/app" component={App} />
-            <Route path = "/register-member" component={RegisterMember}/>
-            <Route path = "/login" component={Login}/>
-        </Route>
-    </Router>
-
-
+        <Router history = {browserHistory} >
+            <Route path = "/" component = {Home} loginAuth={loginAuth}>
+                <IndexRoute component = {Login} />
+                <Route path = "/app" component={App} loginAuth={loginAuth}/>
+                <Route path = "/signup" component={Signup} loginAuth={loginAuth}/>
+                <Route path = "/login" component={Login} loginAuth={loginAuth}/>
+            </Route>
+        </Router>
     );
 };
 
