@@ -12,24 +12,26 @@ export default () => {
             data: promise.data
         })
             .then(result => {
-                //console.log("[promiseMiddleware] result : ", result);
-                window.sessionStorage.setItem('loginUserId', result.data.userId);
-                //console.log("[promiseMiddleware] sessionStorage : ", window.sessionStorage );
-                const username = result.data.profile.username;
-
-                next({ ...rest, result, type: `${type}_SUCCESS` });
-
+                console.log("[promiseMiddleware] result : ", result);
                 if (type === 'LOGIN'){
+                    //console.log("[promiseMiddleware] result : ", result);
+                    window.sessionStorage.setItem('loginUserId', result.data.userId);
+                    //console.log("[promiseMiddleware] sessionStorage : ", window.sessionStorage );
+                    const username = result.data.profile.username;
+                    next({ ...rest, result, type: `${type}_SUCCESS` });
                     alert('환영합니다! "'+ username +'"님');
                 } else if (type === 'SIGNUP'){
-                    alert("회원으로 등록되었습니다! 로그인해주세요.:)");
+                    next({ ...rest, result, type: `${type}_SUCCESS` });
+                    alert("회원으로 등록되었습니다! 로그인 하신 후 이용해주세요.:)");
                 }
             })
             .catch(error => {
                 next({ ...rest, error, type: `${type}_FAILURE` });
                 if (type === 'LOGIN'){
+                    console.log(error);
                     alert("아이디 또는 비밀번호가 틀립니다.");
                 } else if (type === 'SIGNUP'){
+                    console.log(error);
                     alert("회원등록에 실패하였습니다. 관리자에게 문의해주세요.");
                 }
             });

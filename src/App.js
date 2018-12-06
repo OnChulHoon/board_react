@@ -3,6 +3,7 @@ import _ from 'lodash';
 import BoardVer001 from './components/BoardVer001';
 import WriteForm from "./components/write/WriteForm";
 import BoardList from "./components/list/BoardList";
+import axios from 'axios';
 
 
 // const propTypes = {
@@ -199,6 +200,23 @@ class App extends Component {
         alert("수정 입력이 취소되었습니다.");
     }
 
+    handleLogout = (e) => {
+        e.preventDefault();
+        if(window.confirm("로그아웃 하시겠습니까?")){
+            const actionDo = true;
+            return axios.post('/api/auth/logout', { method: "post", actionDo: actionDo })
+                .then(result => {
+                    window.sessionStorage.clear();
+                    alert("로그아웃 되었습니다! 이용해주셔서 감사합니다.:)");
+                    window.location.href = "/";
+                })
+                .catch(error => {
+                    console.log("logoutError : ", error);
+                    alert("로그아웃에 실패하였습니다. 관리자에게 문의해주세요.");
+                });
+        };
+    }
+
     render() {
         const { board_lists } = this.state;
 
@@ -209,7 +227,8 @@ class App extends Component {
             handleRemove,
             handleCancel,
             handleShowRowData,
-            handleCancelByModify
+            handleCancelByModify,
+            handleLogout
         } = this;
 
         // 현재 시간으로 날짜를 설정하여 저장한다.
@@ -239,7 +258,7 @@ class App extends Component {
                 </form>
             )}>
                 <div align="right">
-                    <button>로그아웃</button>
+                    <button type="submit" onClick={handleLogout}>로그아웃</button>
                 </div>
                 <br/>
                {/* 게시글 목록을 표시한다.*/}

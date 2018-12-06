@@ -19,9 +19,9 @@ const Root = () => {
         <Router history = {browserHistory} >
             <Route path = "/" component = {Home} loginAuth={loginAuth}>
                 <IndexRoute component = {Login} />
-                <Route path = "/app" component={App} loginAuth={loginAuth}/>
+                <Route path = "/app" component={App} loginAuth={loginAuth} />
                 <Route path = "/signup" component={Signup} loginAuth={loginAuth}/>
-                <Route path = "/login" component={Login} loginAuth={loginAuth}/>
+                <Route path = "/login" component={Login} loginAuth={loginAuth} />
             </Route>
         </Router>
     );

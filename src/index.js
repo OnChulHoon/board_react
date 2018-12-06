@@ -16,7 +16,7 @@ const store = createStore(
     applyMiddleware(compose(promiseMiddleware))
 );
 
-//console.log("defaultStore - store.getState() : ", store.getState());
+console.log("defaultStore - store.getState() : ", store.getState());
 
 ReactDOM.render(
     <Provider store={store}>

@@ -30,16 +30,21 @@ class SignupForm extends Component {
         e.preventDefault();
         const { signup } = this.props;
         this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-                const userId = values.userId;
-                const password = values.password;
-                const username = values.username;
-                const email = values.email;
-                const nickname = values.nickname;
-                const phoneNumber = values.phoneNumber;
-                const countryCode = values.countryCode;
-                signup(userId, password, username, email, nickname, phoneNumber, countryCode);
+            const agreement = values.agreement;
+            if(agreement === true){
+                if (!err) {
+                    console.log('Received values of form: ', values);
+                    const userId = values.userId;
+                    const password = values.password;
+                    const username = values.username;
+                    const email = values.email;
+                    const nickname = values.nickname;
+                    const phoneNumber = values.phoneNumber;
+                    const countryCode = values.countryCode;
+                    signup(userId, password, username, email, nickname, phoneNumber, countryCode);
+                }
+            } else {
+                alert("약관을 읽고 동의 체크해주세요.");
             }
         });
     }
@@ -165,9 +170,7 @@ class SignupForm extends Component {
                 <FormItem
                     {...formItemLayout}
                     label={(
-                        <span>
-                                이름&nbsp;
-                        </span>
+                        <span>이름&nbsp;</span>
                     )}
                 >
                     {getFieldDecorator('username', {
