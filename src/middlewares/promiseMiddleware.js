@@ -23,6 +23,12 @@ export default () => {
                 } else if (type === 'SIGNUP'){
                     next({ ...rest, result, type: `${type}_SUCCESS` });
                     alert("회원으로 등록되었습니다! 로그인 하신 후 이용해주세요.:)");
+                } else if (type === 'IDCHECK'){
+                    next({ ...rest, result, type: `${type}_SUCCESS` });
+                    alert("존재하는 아이디 입니다. 다른 아이디로 등록해주세요.");
+                }else if (type === 'EMAILCHECK'){
+                    next({ ...rest, result, type: `${type}_SUCCESS` });
+                    alert("존재하는 이메일 입니다. 다른 이메일로 등록해주세요.");
                 }
             })
             .catch(error => {
@@ -33,6 +39,12 @@ export default () => {
                 } else if (type === 'SIGNUP'){
                     console.log(error);
                     alert("회원등록에 실패하였습니다. 관리자에게 문의해주세요.");
+                } else if (type === 'IDCHECK'){
+                    console.log(error);
+                    alert("사용할 수 있는 아이디입니다.");
+                } else if (type === 'EMAILCHECK'){
+                    console.log(error);
+                    alert("사용할 수 있는 이메일입니다.");
                 }
             });
     };

@@ -6,6 +6,14 @@ import { Link } from 'react-router';
 const style = {
     width : "100%"
 }
+
+const checkBtn = {
+    width : "30%",
+}
+const checkInput = {
+    width : "65%",
+    marginRight: "20px",
+}
 const styleTitle ={
     textAlign: "center",
     minWidth: "250px",
@@ -71,6 +79,32 @@ class SignupForm extends Component {
         callback();
     }
 
+    handleIdCheck = (e) => {
+        e.preventDefault();
+        const { userIdCheck } = this.props;
+
+        const userId = document.getElementById("userId").value;
+
+        if(userId !== ""){
+            userIdCheck(userId);
+        } else {
+            alert("등록할 아이디를 입력하시고 확인해주세요.");
+        }
+    }
+
+    handleEmailCheck = (e) => {
+        e.preventDefault();
+        const { userEmailCheck } = this.props;
+
+        const email = document.getElementById("email").value;
+
+        if(email !== ""){
+            userEmailCheck(email);
+        } else {
+            alert("등록할 이메일을 입력하시고 확인해주세요.");
+        }
+    }
+
     render() {
         const { signupSuccess } = this.props;
         const { getFieldDecorator } = this.props.form;
@@ -105,6 +139,7 @@ class SignupForm extends Component {
                 <Option value="87">+87</Option>
             </Select>
         );
+
         let rootLoginAuth = this.props;
         const loginAuth = rootLoginAuth.loginAuth;
 
@@ -135,8 +170,9 @@ class SignupForm extends Component {
                     {getFieldDecorator('userId', {
                         rules: [{ required: true, message: 'Please input your id!', whitespace: true }],
                     })(
-                        <Input />
+                        <Input style={checkInput} />
                     )}
+                    <button style={checkBtn} type="primary" className="ant-btn ant-btn-primary" onClick={this.handleIdCheck}>아이디 중복확인</button>
                 </FormItem>
 
                 <FormItem
@@ -190,8 +226,9 @@ class SignupForm extends Component {
                             required: true, message: 'Please input your E-mail!',
                         }],
                     })(
-                        <Input />
+                        <Input style={checkInput}/>
                     )}
+                    <button style={checkBtn} type="primary" className="ant-btn ant-btn-primary" onClick={this.handleEmailCheck}>이메일 중복확인</button>
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
